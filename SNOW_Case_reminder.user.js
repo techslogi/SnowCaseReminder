@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         SNOW Case reminder
 // @namespace    http://tampermonkey.net/
-// @version      0.280820181
-// @updateURL    
+// @version      0.31309181
+// @updateURL    https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @description  Creates a div on SNOW populated with cases sent to other groups.
 // @author       Victor Gasparoni, Gabriel Vicente
 // @match        *://itsmgbpeu.service-now.com/*
@@ -39,6 +39,8 @@
 // @require      https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js
 // ==/UserScript==
+
+//testing autoupdate
 
 (function() {
 	'use strict';
