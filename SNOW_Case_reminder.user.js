@@ -3,6 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @updateURL    https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
+// @downloadURL	 https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @description  Creates a div on SNOW populated with cases sent to other groups.
 // @author       Victor Gasparoni, Gabriel Vicente
 // @match        *://itsmgbpeu.service-now.com/*
