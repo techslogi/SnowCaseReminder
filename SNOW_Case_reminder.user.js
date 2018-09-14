@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SNOW Case reminder
 // @namespace    http://tampermonkey.net/
-// @version      1.01
+// @version      1.02
 // @updateURL    https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @downloadURL	 https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @description  Creates a div on SNOW populated with cases sent to other groups.
@@ -55,10 +55,11 @@
 			  1 is the URL
 			  2 is the title
 			  3 is the group the case is with
-			  4 is the date and time
-			  5 is who last interacted
-			  6 is the last time it was updated
-			  7 is the last worknote.*/
+			  4 is the status
+			  5 is the date and time
+			  6 is who last interacted
+			  7 is the last time it was updated
+			  8 is the last worknote.*/
 				var list = [];
 				//list[0] = [];
 				return list;
@@ -195,6 +196,9 @@
 			html += 				'Group with';
 			html += 			'</th>';
 			html += 			'<th class="text-align-left list_header_cell list_hdr">';
+			html += 				'Status';
+			html += 			'</th>';
+			html += 			'<th class="text-align-left list_header_cell list_hdr">';
 			html += 				'Added on';
 			html += 			'</th>';
 			html += 			'<th class="text-align-left list_header_cell list_hdr">';
@@ -238,8 +242,11 @@
 					html += 		'<td>';
 					html += 			casesList[i][6];
 					html += 		'</td>';
-					html += 		'<td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">';
+					html += 		'<td>';
 					html += 			casesList[i][7];
+					html += 		'</td>';
+					html += 		'<td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">';
+					html += 			casesList[i][8];
 					html += 		'</td>';
 					html += 		'<td>';
 					html += 			'<input type="button" class="btn-update-case btn btn-default" value="Refresh"/>';
@@ -269,8 +276,6 @@
 			html += '</div>';
 
 			divCases.innerHTML = html;
-
-						console.log(divCases);
 
 			document.body.appendChild(divCases);
 
@@ -427,6 +432,15 @@
 			var filterHref = GM_getValue("filterHref");
 			//Gets the last information from the case.
 			var userHistory = document.getElementsByClassName("user");
+			//Gets the current status. Since some boxes get disabled if the incident is closed, we validate.
+			var currentStatus = document.getElementById("incident.incident_state");
+			var currentStatusReadOnly = document.getElementById("sys_readonly.incident.incident_state");
+			if(currentStatus != null & currentStatus.nodeName.toLowerCase() === 'select'){
+				currentStatus = currentStatus.options[currentStatus.selectedIndex].text;
+			}
+			if(currentStatusReadOnly != null && currentStatusReadOnly.nodeName.toLowerCase() === 'select'){
+				currentStatus = currentStatusReadOnly.options[currentStatusReadOnly.selectedIndex].text;
+			}
 			//Checks to see if there are any user interactions. This also validates wether we're inside a new incident or not.
 			if(userHistory[0] != undefined){
 				var lastUser = userHistory[0].textContent;
@@ -453,10 +467,11 @@
 						currentCase[1] = caseHref;
 						currentCase[2] = document.getElementById("incident.short_description").value;
 						currentCase[3] = document.getElementById("sys_display.incident.assignment_group").value;
-						currentCase[4] = casesListUpdating[caseIndex][4];
-						currentCase[5] = lastUser;
-						currentCase[6] = dateBrazil;
-						currentCase[7] = lastWorkNote;
+						currentCase[4] = currentStatus;
+						currentCase[5] = casesListUpdating[caseIndex][5];
+						currentCase[6] = lastUser;
+						currentCase[7] = dateBrazil;
+						currentCase[8] = lastWorkNote;
 						for(i=0;i<casesListUpdating[caseIndex].length;i++){
 							casesListUpdating[caseIndex][i] = currentCase[i];
 						}
@@ -472,10 +487,11 @@
 						currentCase[1] = caseHref;
 						currentCase[2] = document.getElementById("incident.short_description").value;
 						currentCase[3] = document.getElementById("sys_display.incident.assignment_group").value;
-						currentCase[4] = casesListUpdating[indexToUpdate][4];
-						currentCase[5] = lastUser;
-						currentCase[6] = dateBrazil;
-						currentCase[7] = lastWorkNote;
+						currentCase[4] = currentStatus;
+						currentCase[5] = casesListUpdating[indexToUpdate][5];
+						currentCase[6] = lastUser;
+						currentCase[7] = dateBrazil;
+						currentCase[8] = lastWorkNote;
 						for(i=0;i<casesListUpdating[checkedCases[indexToUpdate]].length;i++){
 							casesListUpdating[checkedCases[indexToUpdate]][i] = currentCase[i];
 						}
@@ -496,10 +512,11 @@
 					currentCase[1] = caseHref;
 					currentCase[2] = document.getElementById("incident.short_description").value;
 					currentCase[3] = document.getElementById("sys_display.incident.assignment_group").value;
-					currentCase[4] = dateTime;
-					currentCase[5] = currentAnalyst;
-					currentCase[6] = dateTime;
-					currentCase[7] = lastWorkNote;
+					currentCase[4] = currentStatus;
+					currentCase[5] = dateTime;
+					currentCase[6] = currentAnalyst;
+					currentCase[7] = dateTime;
+					currentCase[8] = lastWorkNote;
 
 					//New button to add to watchlist.
 					var htmlButtonAdd = '<button class="btn btn-default" id="buttonAddToWatchlist" style="margin-right: 4px; background-color: rgb(250, 250, 210); ">Add to watchlist</button>';
@@ -509,8 +526,8 @@
 
 					//Listeners for buttons, check functions above.
 					buttonAdd.addEventListener("click", function(){
-						currentCase[5] = lastUser;
-						currentCase[6] = dateBrazil;
+						currentCase[6] = lastUser;
+						currentCase[7] = dateBrazil;
 						addToWatchList(casesList, currentCase, 2);
 					});
 					buttonUpdate.addEventListener("click", function(){
