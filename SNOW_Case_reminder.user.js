@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SNOW Case reminder
 // @namespace    http://tampermonkey.net/
-// @version      1.02
+// @version      1.03
 // @updateURL    https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @downloadURL	 https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @description  Creates a div on SNOW populated with cases sent to other groups.
@@ -79,7 +79,7 @@
 			}
 			if(exists == false && caseStatus != 6){
 				casesList.push(currentCase);
-				var addConfirmation = confirm("Add this incident to the watchlist?");
+				var addConfirmation = window.top.confirm("Add this incident to the watchlist?");
 				if(addConfirmation == true){
 					GM_setValue("casesList", casesList);
 				}
