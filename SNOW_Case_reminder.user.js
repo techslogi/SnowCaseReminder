@@ -533,7 +533,7 @@
 					buttonUpdate.addEventListener("click", function(){
 						var newGroup = document.getElementById("sys_display.incident.assignment_group").value;
 						var newStatus = document.getElementById("incident.incident_state").value;
-						if(newGroup!="DBS CURITIBA FD" || newStatus == 6){
+						if(newGroup!="DBS LA FD" || newStatus == 6){
 							currentCase[3] = newGroup;
 							addToWatchList(casesList, currentCase, newStatus);
 						}
@@ -541,7 +541,7 @@
 					buttonSave.addEventListener("click", function(){
 						var newGroup = document.getElementById("sys_display.incident.assignment_group").value;
 						var newStatus = document.getElementById("incident.incident_state").value;
-						if(newGroup!="DBS CURITIBA FD" || newStatus == 6){
+						if(newGroup!="DBS LA FD" || newStatus == 6){
 							currentCase[3] = newGroup;
 							addToWatchList(casesList, currentCase, newStatus);
 						}
