@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SNOW Case reminder
 // @namespace    http://tampermonkey.net/
-// @version      1.03
+// @version      1.031
 // @updateURL    https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @downloadURL	 https://github.com/techslogi/SnowCaseReminder/raw/master/SNOW_Case_reminder.user.js
 // @description  Creates a div on SNOW populated with cases sent to other groups.
